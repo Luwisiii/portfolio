@@ -1,0 +1,45 @@
+export const skillGroups = [
+  {
+    name: 'Languages',
+    items: ['Python', 'TypeScript', 'JavaScript', 'SQL', 'PHP', 'Dart', 'Rust', 'HTML5 / CSS3'],
+  },
+  {
+    name: 'Frameworks & APIs',
+    items: ['Django', 'DRF', 'Flask', 'FastAPI', 'React', 'Tauri', 'Zustand', 'REST · Axios'],
+  },
+  {
+    name: 'Data & AI',
+    items: [
+      'PostgreSQL',
+      'pgvector',
+      'MySQL',
+      'Redis',
+      'Celery',
+      'sentence-transformers',
+      'Ollama',
+      'PyMuPDF',
+      'TensorFlow / Keras',
+    ],
+  },
+  {
+    name: 'Mobile & Local Systems',
+    items: ['Flutter', 'Riverpod', 'Drift', 'SQLite', 'flutter_rust_bridge', 'Secure storage'],
+  },
+  {
+    name: 'Microsoft & Business Systems',
+    items: [
+      'SharePoint',
+      'Power Automate',
+      'Power BI',
+      'Microsoft Forms',
+      'Outlook',
+      'RingCentral API',
+      'SourceWhale',
+      'Leopard',
+    ],
+  },
+  {
+    name: 'Tools',
+    items: ['Git · GitHub', 'Docker', 'Postman', 'Vite', 'Tailwind CSS', 'Bootstrap'],
+  },
+]
