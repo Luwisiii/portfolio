@@ -5,7 +5,20 @@ export const skillGroups = [
   },
   {
     name: 'Frameworks & APIs',
-    items: ['Django', 'DRF', 'Flask', 'FastAPI', 'React', 'Tauri', 'Zustand', 'REST · Axios'],
+    items: [
+      'Django',
+      'DRF',
+      'Flask',
+      'FastAPI',
+      'React',
+      'Next.js',
+      'Node.js',
+      'Tauri',
+      'Zustand',
+      'SQLAlchemy',
+      'Jinja',
+      'REST · Axios',
+    ],
   },
   {
     name: 'Data & AI',
@@ -18,6 +31,7 @@ export const skillGroups = [
       'sentence-transformers',
       'Ollama',
       'PyMuPDF',
+      'ExcelJS',
       'TensorFlow / Keras',
     ],
   },
@@ -33,6 +47,8 @@ export const skillGroups = [
       'Power BI',
       'Microsoft Forms',
       'Outlook',
+      'Microsoft Graph API',
+      'Azure Entra SSO',
       'RingCentral API',
       'SourceWhale',
       'Leopard',
@@ -40,6 +56,6 @@ export const skillGroups = [
   },
   {
     name: 'Tools',
-    items: ['Git · GitHub', 'Docker', 'Postman', 'Vite', 'Tailwind CSS', 'Bootstrap'],
+    items: ['Git · GitHub', 'Docker', 'Postman', 'Puppeteer', 'Vite', 'Tailwind CSS', 'Bootstrap'],
   },
 ]

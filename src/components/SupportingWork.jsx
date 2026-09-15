@@ -19,7 +19,7 @@ export function SupportingWork() {
                 </span>
               ))}
             </div>
-            {project.link ? (
+            {project.link && (
               <a
                 className="project-link"
                 href={project.link}
@@ -28,8 +28,6 @@ export function SupportingWork() {
               >
                 View on GitHub
               </a>
-            ) : (
-              <span className="project-link is-unlinked">Source available on request</span>
             )}
           </div>
         ))}
