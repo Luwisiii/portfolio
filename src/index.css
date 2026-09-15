@@ -640,6 +640,13 @@ section:last-of-type {
 }
 
 /* ---------- Support / capstone card ---------- */
+.support-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
 .support-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -649,6 +656,10 @@ section:last-of-type {
   flex-direction: column;
   gap: 12px;
   margin-top: 28px;
+}
+
+.support-grid .support-card {
+  margin-top: 0;
 }
 
 .support-card h4 {
@@ -775,7 +786,8 @@ footer {
   .brief {
     grid-template-columns: 1fr;
   }
-  .skills-grid {
+  .skills-grid,
+  .support-grid {
     grid-template-columns: 1fr;
   }
   .contact-block {

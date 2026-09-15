@@ -48,6 +48,33 @@ export const featuredProjects = [
   },
 ]
 
+export const supportingProjects = [
+  {
+    name: 'Candidate Pipeline',
+    tag: 'Newport Williams',
+    description:
+      'Internal recruiting CRM reading live from Microsoft 365 — candidates, firms, and job orders in one place, matched by a weighted scoring engine over the Graph API.',
+    tech: ['Next.js', 'TypeScript', 'Microsoft Graph API', 'Azure Entra SSO'],
+    link: null,
+  },
+  {
+    name: 'Leopard-to-SourceWhale Converter',
+    tag: 'Newport Williams',
+    description:
+      'Transforms and prepares recruitment data — leads and attorney bios — for use across downstream business systems.',
+    tech: ['Node.js', 'Puppeteer', 'ExcelJS'],
+    link: null,
+  },
+  {
+    name: 'Prokora Admin System',
+    tag: 'Prokora Network Solutions',
+    description:
+      'Flask and MySQL admin system with authentication, role- and permission-based access control, and dynamic CRUD workflows.',
+    tech: ['Flask', 'MySQL', 'SQLAlchemy'],
+    link: null,
+  },
+]
+
 export const capstone = {
   name: 'OnionLens — Armyworm Detection',
   tag: 'Capstone · 2024',
