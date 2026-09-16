@@ -4,7 +4,7 @@ export const experience = [
     company: 'Newport Williams',
     dates: 'May – Sep 2026',
     highlights: [
-      'Automated resume intake — routing Outlook attachments into a structured SharePoint document repository.',
+      'Automated resume intake, routing Outlook attachments straight into a structured SharePoint repository.',
       'Built a Leopard-to-SourceWhale converter that transforms and prepares recruitment data for downstream business systems.',
       'Supported candidate matching and ATS workflows using structured resume and job data.',
     ],

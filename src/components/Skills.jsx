@@ -1,12 +1,15 @@
 import { skillGroups } from '../data/skills'
+import { Reveal } from './Reveal'
 
 export function Skills() {
   return (
     <section id="skills">
-      <p className="eyebrow">Toolbox</p>
+      <Reveal as="p" className="eyebrow">
+        Toolbox
+      </Reveal>
       <div className="skills-grid">
-        {skillGroups.map((group) => (
-          <div className="skill-group" key={group.name}>
+        {skillGroups.map((group, i) => (
+          <Reveal as="div" className="skill-group" key={group.name} delay={(i % 2) * 80}>
             <h5>{group.name}</h5>
             <div className="tech-row">
               {group.items.map((item) => (
@@ -15,7 +18,7 @@ export function Skills() {
                 </span>
               ))}
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react'
 
+function resolveIsDark(theme) {
+  return (
+    theme === 'dark' ||
+    (theme !== 'light' && !window.matchMedia('(prefers-color-scheme: light)').matches)
+  )
+}
+
 export function useTheme() {
   const [theme, setTheme] = useState(() => {
     try {
@@ -19,10 +26,7 @@ export function useTheme() {
   }, [theme])
 
   function toggle() {
-    const isDark =
-      theme === 'dark' ||
-      (theme !== 'light' && !window.matchMedia('(prefers-color-scheme: light)').matches)
-    const next = isDark ? 'light' : 'dark'
+    const next = resolveIsDark(theme) ? 'light' : 'dark'
     setTheme(next)
     try {
       localStorage.setItem('theme', next)
@@ -31,5 +35,5 @@ export function useTheme() {
     }
   }
 
-  return { theme, toggle }
+  return { theme, isDark: resolveIsDark(theme), toggle }
 }

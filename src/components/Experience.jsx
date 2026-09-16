@@ -1,12 +1,15 @@
 import { experience } from '../data/experience'
+import { Reveal } from './Reveal'
 
 export function Experience() {
   return (
     <section id="experience">
-      <p className="eyebrow">Experience</p>
-      <div className="timeline">
-        {experience.map((job) => (
-          <div className="timeline-item" key={job.company}>
+      <Reveal as="p" className="eyebrow">
+        Experience
+      </Reveal>
+      <Reveal as="div" className="timeline">
+        {experience.map((job, i) => (
+          <Reveal as="div" className="timeline-item" key={job.company} delay={i * 100}>
             <span className="timeline-dot"></span>
             <div className="timeline-head">
               <h4>{job.role}</h4>
@@ -18,9 +21,9 @@ export function Experience() {
                 <li key={h}>{h}</li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         ))}
-      </div>
+      </Reveal>
     </section>
   )
 }

@@ -1,13 +1,16 @@
 import { featuredProjects } from '../data/projects'
 import { ProjectDiagram } from './ProjectDiagram'
+import { Reveal } from './Reveal'
 
 export function FeaturedProjects() {
   return (
     <section id="featured">
-      <p className="eyebrow">Featured builds</p>
+      <Reveal as="p" className="eyebrow">
+        Featured builds
+      </Reveal>
 
       {featuredProjects.map((project, i) => (
-        <article className={`project-block${i % 2 ? ' flip' : ''}`} key={project.id}>
+        <Reveal as="article" className={`project-block${i % 2 ? ' flip' : ''}`} key={project.id}>
           <div className="project-copy">
             <span className={`status is-${project.status.kind}`}>
               <span className="status-dot"></span>
@@ -47,7 +50,7 @@ export function FeaturedProjects() {
             )}
           </div>
           <ProjectDiagram variant={project.id} />
-        </article>
+        </Reveal>
       ))}
     </section>
   )

@@ -1,12 +1,24 @@
 import { supportingProjects } from '../data/projects'
+import { Reveal } from './Reveal'
+import { useSpotlight } from '../hooks/useSpotlight'
 
 export function SupportingWork() {
+  const spotlight = useSpotlight()
+
   return (
     <section id="supporting">
-      <p className="eyebrow">Supporting work</p>
+      <Reveal as="p" className="eyebrow">
+        Supporting work
+      </Reveal>
       <div className="support-grid">
-        {supportingProjects.map((project) => (
-          <div className="support-card" key={project.name}>
+        {supportingProjects.map((project, i) => (
+          <Reveal
+            as="div"
+            className="support-card"
+            key={project.name}
+            delay={i * 80}
+            {...spotlight}
+          >
             <div className="support-top">
               <h4>{project.name}</h4>
               <span className="tag-mini">{project.tag}</span>
@@ -29,7 +41,7 @@ export function SupportingWork() {
                 View on GitHub
               </a>
             )}
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

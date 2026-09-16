@@ -1,11 +1,15 @@
+import { Reveal } from './Reveal'
+
 export function Contact() {
   return (
     <section id="contact">
-      <div className="contact-block">
+      <Reveal as="div" className="contact-block">
         <div>
-          <p className="eyebrow">Get in touch</p>
-          <h3>Let's build something that has to work.</h3>
-          <p>Open to full-stack developer roles — remote or on-site.</p>
+          <Reveal as="p" className="eyebrow">
+            Get in touch
+          </Reveal>
+          <h3>Have something that actually needs to work?</h3>
+          <p>Open to full-stack roles, remote or on-site.</p>
         </div>
         <div className="contact-links">
           <a href="mailto:plddumayas@gmail.com">plddumayas@gmail.com</a>
@@ -20,7 +24,7 @@ export function Contact() {
             linkedin.com/in/paolodumayas
           </a>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }
