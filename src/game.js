@@ -70,6 +70,18 @@ export function resetProgress() {
   window.location.reload()
 }
 
+export function progressSnapshot() {
+  return state
+}
+
+export function isComplete(s) {
+  return s.unlocked.length === ACHIEVEMENTS.length
+}
+
+export function openReward() {
+  window.dispatchEvent(new Event('reward:open'))
+}
+
 export function openTerminal(command) {
   window.dispatchEvent(new CustomEvent('terminal:open', { detail: command }))
 }

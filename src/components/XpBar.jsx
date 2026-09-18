@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { ACHIEVEMENTS, XP_PER_LEVEL, openTerminal, unlock, useProgress, visitSection, xpOf } from '../game'
+import { ACHIEVEMENTS, XP_PER_LEVEL, isComplete, openReward, openTerminal, unlock, useProgress, visitSection, xpOf } from '../game'
 
 // Each section scrolled into view is worth XP; reaching Contact is an achievement.
 function useSectionVisits() {
@@ -32,9 +32,9 @@ export function XpBar() {
   return (
     <>
       <button
-        className="xp-chip mono"
+        className={`xp-chip mono${isComplete(progress) ? ' is-complete' : ''}`}
         type="button"
-        onClick={() => openTerminal('achievements')}
+        onClick={() => (isComplete(progress) ? openReward() : openTerminal('achievements'))}
         aria-label={`Level ${level}, ${xp} XP, ${progress.unlocked.length} of ${ACHIEVEMENTS.length} achievements. Open achievements.`}
       >
         <span className="xp-level">LVL {level}</span>

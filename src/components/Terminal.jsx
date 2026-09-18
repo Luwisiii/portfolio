@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ACHIEVEMENTS, openTerminal, resetProgress, unlock, useProgress } from '../game'
+import { ACHIEVEMENTS, isComplete, openReward, openTerminal, resetProgress, unlock, useProgress } from '../game'
 import { featuredProjects } from '../data/projects'
 
 const EMAIL = 'plddumayas@gmail.com'
@@ -41,7 +41,7 @@ const SUGGESTIONS = [
   ['sudo hire-me', 'the fastest way to reach me'],
   ['reset', 'start over, like your first visit'],
 ]
-const COMMANDS = ['help', 'ls', 'open', 'whoami', 'contact', 'theme', 'achievements', 'reset', 'clear', 'exit', 'sudo', 'hire-me']
+const COMMANDS = ['help', 'ls', 'open', 'whoami', 'contact', 'theme', 'achievements', 'reward', 'reset', 'clear', 'exit', 'sudo', 'hire-me']
 
 // every full command the Tab key can complete to
 function completions() {
@@ -90,6 +90,7 @@ function run(input, progress) {
         '  contact            how to reach me',
         '  theme [dark|light] switch theme',
         '  achievements       your progress',
+        '  reward             ??? (unlock every achievement)',
         '  reset              start over: clears level, XP and achievements',
         '  clear · exit',
         '',
@@ -137,7 +138,15 @@ function run(input, progress) {
         ),
         '',
         `${progress.unlocked.length}/${ACHIEVEMENTS.length} unlocked`,
+        isComplete(progress)
+          ? 'all done. type reward to see your loot again.'
+          : `unlock all ${ACHIEVEMENTS.length} for a legendary reward.`,
       ]
+    case 'reward':
+      if (!isComplete(progress))
+        return [`reward locked: ${progress.unlocked.length}/${ACHIEVEMENTS.length} achievements. type achievements for hints.`]
+      openReward()
+      return ['opening your legendary drop…']
     case 'reset':
     case 'restart':
       setTimeout(resetProgress, 700)

@@ -9,6 +9,7 @@ import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { Terminal, TerminalHint } from './components/Terminal'
 import { Achievements } from './components/Achievements'
+import { Reward } from './components/Reward'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Terminal />
       <TerminalHint />
       <Achievements />
+      <Reward />
     </>
   )
 }

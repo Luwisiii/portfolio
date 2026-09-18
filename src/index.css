@@ -13,6 +13,8 @@
   --ok: #5fb88a;
   --ok-soft: rgba(95, 184, 138, 0.14);
   --danger: #ef6a5f;
+  --gold: #f0c04a;
+  --gold-soft: rgba(240, 192, 74, 0.14);
   --danger-soft: rgba(239, 106, 95, 0.16);
   --shadow: rgba(0, 0, 0, 0.45);
   color-scheme: dark;
@@ -34,6 +36,8 @@
     --ok: #237a56;
     --ok-soft: rgba(35, 122, 86, 0.1);
     --danger: #c23a2e;
+    --gold: #a87a06;
+    --gold-soft: rgba(168, 122, 6, 0.1);
     --danger-soft: rgba(194, 58, 46, 0.1);
     --shadow: rgba(20, 15, 5, 0.08);
     color-scheme: light;
@@ -55,6 +59,8 @@
   --ok: #237a56;
   --ok-soft: rgba(35, 122, 86, 0.1);
   --danger: #c23a2e;
+  --gold: #a87a06;
+  --gold-soft: rgba(168, 122, 6, 0.1);
   --danger-soft: rgba(194, 58, 46, 0.1);
   --shadow: rgba(20, 15, 5, 0.08);
   color-scheme: light;
@@ -1941,4 +1947,293 @@ kbd {
   font: inherit;
   padding: 1px 8px;
   cursor: pointer;
+}
+
+/* ---------- 100% reward ---------- */
+.xp-chip.is-complete {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+}
+.xp-chip.is-complete .xp-level,
+.xp-chip.is-complete .xp-trophies {
+  color: var(--gold);
+}
+
+.reward-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 55; /* over the terminal, under the toasts */
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.25s ease;
+}
+.reward {
+  position: relative;
+  width: min(440px, 100%);
+  padding: 26px 24px 20px;
+  background: var(--surface);
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+  box-shadow:
+    0 0 0 4px var(--gold-soft),
+    0 40px 90px -30px rgba(0, 0, 0, 0.6);
+  animation: reward-in 0.7s cubic-bezier(0.34, 1.5, 0.64, 1) 0.15s backwards;
+}
+.reward-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.reward-close:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+.reward-eyebrow {
+  margin: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.reward-drop {
+  margin: 14px 0 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  animation: hint-part 0.4s ease-out 0.55s backwards;
+}
+.reward-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  background: linear-gradient(120deg, var(--gold-soft), transparent 60%);
+  position: relative;
+  overflow: hidden;
+  animation: hint-part 0.4s ease-out 0.65s backwards;
+}
+/* one shine sweep across the item, like a rare drop in a game */
+.reward-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: reward-shine 1.1s ease-in-out 1s;
+}
+.reward-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.reward-item h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.reward-rarity {
+  margin: 4px 0 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.reward-stats {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+.reward-stats li {
+  display: flex;
+  gap: 10px;
+  padding: 4px 0;
+  animation: hint-part 0.35s ease-out backwards;
+}
+.reward-stats li:nth-child(1) {
+  animation-delay: 0.85s;
+}
+.reward-stats li:nth-child(2) {
+  animation-delay: 0.95s;
+}
+.reward-stats li:nth-child(3) {
+  animation-delay: 1.05s;
+}
+.reward-stats li:nth-child(4) {
+  animation-delay: 1.15s;
+}
+.reward-stats span {
+  min-width: 7ch;
+  color: var(--ok);
+}
+.reward-flavor {
+  margin: 14px 0 16px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.reward-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.reward-actions a,
+.reward-actions button {
+  padding: 9px 14px;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text);
+  transition:
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+.reward-actions a:hover,
+.reward-actions button:hover {
+  border-color: var(--accent);
+}
+.reward-actions a:active,
+.reward-actions button:active {
+  transform: scale(0.97);
+}
+.reward-actions .reward-claim {
+  flex: 1;
+  text-align: center;
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--bg);
+  font-weight: 600;
+  animation: reward-glow 2.4s ease-in-out 1.6s infinite;
+}
+.reward-actions .reward-claim:hover {
+  border-color: var(--gold);
+  filter: brightness(1.08);
+}
+.reward-claimed {
+  padding: 14px;
+  border: 1px solid var(--ok);
+  border-radius: 10px;
+  background: var(--ok-soft);
+  animation: hint-part 0.35s ease-out;
+}
+.reward-claimed p {
+  margin: 0 0 10px;
+  font-size: 0.86rem;
+  color: var(--text);
+}
+.reward-claimed strong {
+  font-weight: 500;
+  word-break: break-all;
+}
+.reward-claimed-title {
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-weight: 800;
+  color: var(--ok) !important;
+}
+.reward-claimed .reward-actions a {
+  flex: 1;
+  text-align: center;
+  background: var(--surface);
+}
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti i {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 7px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--gold);
+  opacity: 0;
+  animation: confetti 1.6s cubic-bezier(0.2, 0.7, 0.3, 1) calc(var(--i) * 12ms) forwards;
+}
+.confetti i:nth-child(4n + 1) {
+  background: var(--accent);
+}
+.confetti i:nth-child(4n + 2) {
+  background: var(--ok);
+}
+.confetti i:nth-child(4n + 3) {
+  background: var(--text);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+@keyframes reward-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.85) rotate(-2deg);
+  }
+}
+@keyframes reward-shine {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes reward-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--gold-soft);
+  }
+  50% {
+    box-shadow: 0 0 0 6px var(--gold-soft);
+  }
+}
+@keyframes confetti {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(0);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(calc(var(--x) * 0.8), -34vh) rotate(var(--r));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), 45vh) rotate(calc(var(--r) * 3));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+  .reward-actions .reward-claim {
+    animation: none;
+  }
 }
