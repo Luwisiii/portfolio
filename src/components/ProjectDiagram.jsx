@@ -51,11 +51,39 @@ function Marker({ id, color }) {
   )
 }
 
+// A box in the pipeline. `step` is its place in the data flow: nodes come up in
+// that order (CSS reads --step).
+function Node({ x, y, w, h, title, sub, step, accent = false, crashed = false, className = '', ...props }) {
+  const cx = x + w / 2
+  return (
+    <g
+      className={`diagram-node${crashed ? ' is-crashed' : ''} ${className}`}
+      style={{ '--step': step }}
+      {...props}
+    >
+      <rect className={accent ? 'diagram-box-accent' : 'diagram-box'} x={x} y={y} width={w} height={h} rx="6" />
+      <text
+        className={`diagram-label${accent ? ' diagram-label-accent' : ''}`}
+        x={cx}
+        y={y + h / 2 - 3}
+        textAnchor="middle"
+        fill="var(--text)"
+      >
+        {title}
+      </text>
+      <text className="diagram-label diagram-label-sm" x={cx} y={y + h / 2 + 11} textAnchor="middle">
+        {crashed ? 'crashed' : sub}
+      </text>
+    </g>
+  )
+}
+
 // A connector plus a pulse that travels along it. pathLength="100" normalizes every
 // wire to the same dash scale, so one CSS animation fits paths of any real length.
-function Wire({ d, marker, accent = false, delay = 0 }) {
+// `step` is the node it feeds: the wire draws in the beat before that node comes up.
+function Wire({ d, marker, step, accent = false, delay = 0, cut = false }) {
   return (
-    <>
+    <g className={cut ? 'diagram-wire is-cut' : 'diagram-wire'} style={{ '--step': step }}>
       <path
         className={accent ? 'diagram-line-accent' : 'diagram-line'}
         d={d}
@@ -67,7 +95,7 @@ function Wire({ d, marker, accent = false, delay = 0 }) {
         pathLength="100"
         style={{ animationDelay: `${delay}s` }}
       />
-    </>
+    </g>
   )
 }
 
@@ -78,43 +106,15 @@ function LouisDiagram() {
         flutter_rust_bridge
       </text>
 
-      <rect className="diagram-box-accent" x="20" y="26" width="130" height="52" rx="6" />
-      <text className="diagram-label diagram-label-accent" x="85" y="48" textAnchor="middle">
-        FLUTTER UI
-      </text>
-      <text className="diagram-label diagram-label-sm" x="85" y="64" textAnchor="middle">
-        (Dart · Riverpod)
-      </text>
+      <Wire d="M150 52 L190 52" marker="m-louis-a" step={1} accent />
+      <Wire d="M190 60 L150 60" marker="m-louis-b" step={1} delay={1.1} />
+      <Wire d="M255 78 L97 140" marker="m-louis-b" step={2} delay={0.5} />
+      <Wire d="M255 78 L250 140" marker="m-louis-b" step={2} delay={0.8} />
 
-      <rect className="diagram-box" x="190" y="26" width="130" height="52" rx="6" />
-      <text className="diagram-label" x="255" y="48" textAnchor="middle" fill="var(--text)">
-        RUST ENGINE
-      </text>
-      <text className="diagram-label diagram-label-sm" x="255" y="64" textAnchor="middle">
-        workspace · fs · exec
-      </text>
-
-      <Wire d="M150 52 L190 52" marker="m-louis-a" accent />
-      <Wire d="M190 60 L150 60" marker="m-louis-b" delay={1.1} />
-
-      <rect className="diagram-box" x="45" y="140" width="105" height="48" rx="6" />
-      <text className="diagram-label" x="97" y="160" textAnchor="middle">
-        DRIFT + SQLITE
-      </text>
-      <text className="diagram-label diagram-label-sm" x="97" y="174" textAnchor="middle">
-        local state
-      </text>
-
-      <rect className="diagram-box" x="190" y="140" width="120" height="48" rx="6" />
-      <text className="diagram-label" x="250" y="160" textAnchor="middle">
-        SECURE STORAGE
-      </text>
-      <text className="diagram-label diagram-label-sm" x="250" y="174" textAnchor="middle">
-        credentials
-      </text>
-
-      <Wire d="M255 78 L97 140" marker="m-louis-b" delay={0.5} />
-      <Wire d="M255 78 L250 140" marker="m-louis-b" delay={0.8} />
+      <Node x={20} y={26} w={130} h={52} title="FLUTTER UI" sub="(Dart · Riverpod)" step={0} accent />
+      <Node x={190} y={26} w={130} h={52} title="RUST ENGINE" sub="workspace · fs · exec" step={1} />
+      <Node x={45} y={140} w={105} h={48} title="DRIFT + SQLITE" sub="local state" step={2} />
+      <Node x={190} y={140} w={120} h={48} title="SECURE STORAGE" sub="credentials" step={2.2} />
 
       <defs>
         <Marker id="m-louis-a" color="var(--accent)" />
@@ -124,56 +124,63 @@ function LouisDiagram() {
   )
 }
 
+const OUTPUTS = [
+  { id: 'preview', x: 10, title: 'PREVIEW', sub: 'staged', from: 140 },
+  { id: 'program', x: 92, title: 'PROGRAM', sub: 'live', from: 162, accent: true },
+  { id: 'audience', x: 174, title: 'AUDIENCE', sub: 'room view', from: 178 },
+  { id: 'stage', x: 256, title: 'STAGE', sub: 'confidence', from: 200 },
+]
+
+// Hover (or tap) an output to crash it. Its wire gets cut, the other three keep
+// pulsing — the isolation claim from the copy, shown instead of stated.
 function WorshipDiagram() {
+  const [crashed, setCrashed] = useState(null)
+  const down = OUTPUTS.find((o) => o.id === crashed)
+
   return (
     <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
-      <rect className="diagram-box-accent" x="105" y="18" width="130" height="42" rx="6" />
-      <text className="diagram-label diagram-label-accent" x="170" y="36" textAnchor="middle">
-        LIVE COMMANDS
-      </text>
-      <text className="diagram-label diagram-label-sm" x="170" y="50" textAnchor="middle">
-        typed · one per cue
-      </text>
+      {OUTPUTS.map((o, i) => (
+        <Wire
+          key={o.id}
+          d={`M${o.from} 60 L${o.x + 37} 108`}
+          marker={o.accent ? 'm-ws-a' : 'm-ws-b'}
+          step={1 + i * 0.15}
+          accent={o.accent}
+          delay={i * 0.15}
+          cut={crashed === o.id}
+        />
+      ))}
 
-      <Wire d="M140 60 L47 108" marker="m-ws-b" delay={0.15} />
-      <Wire d="M162 60 L129 108" marker="m-ws-a" accent />
-      <Wire d="M178 60 L211 108" marker="m-ws-b" delay={0.3} />
-      <Wire d="M200 60 L293 108" marker="m-ws-b" delay={0.45} />
+      <Node x={105} y={18} w={130} h={42} title="LIVE COMMANDS" sub="typed · one per cue" step={0} accent />
 
-      <rect className="diagram-box" x="10" y="108" width="75" height="52" rx="6" />
-      <text className="diagram-label" x="47" y="130" textAnchor="middle">
-        PREVIEW
-      </text>
-      <text className="diagram-label diagram-label-sm" x="47" y="144" textAnchor="middle">
-        staged
-      </text>
+      {OUTPUTS.map((o, i) => (
+        <Node
+          key={o.id}
+          x={o.x}
+          y={108}
+          w={75}
+          h={52}
+          title={o.title}
+          sub={o.sub}
+          step={1 + i * 0.15}
+          accent={o.accent}
+          crashed={crashed === o.id}
+          className="is-crashable"
+          onMouseEnter={() => setCrashed(o.id)}
+          onMouseLeave={() => setCrashed(null)}
+          onClick={() => setCrashed((c) => (c === o.id ? null : o.id))}
+        />
+      ))}
 
-      <rect className="diagram-box-accent" x="92" y="108" width="75" height="52" rx="6" />
-      <text className="diagram-label diagram-label-accent" x="129" y="130" textAnchor="middle">
-        PROGRAM
-      </text>
-      <text className="diagram-label diagram-label-sm" x="129" y="144" textAnchor="middle">
-        live
-      </text>
-
-      <rect className="diagram-box" x="174" y="108" width="75" height="52" rx="6" />
-      <text className="diagram-label" x="211" y="130" textAnchor="middle">
-        AUDIENCE
-      </text>
-      <text className="diagram-label diagram-label-sm" x="211" y="144" textAnchor="middle">
-        room view
-      </text>
-
-      <rect className="diagram-box" x="256" y="108" width="75" height="52" rx="6" />
-      <text className="diagram-label" x="293" y="130" textAnchor="middle">
-        STAGE
-      </text>
-      <text className="diagram-label diagram-label-sm" x="293" y="144" textAnchor="middle">
-        confidence
-      </text>
-
-      <text className="diagram-label diagram-label-sm" x="170" y="188" textAnchor="middle">
-        4 independent outputs · isolated failure
+      <text
+        className={`diagram-label diagram-label-sm${down ? ' diagram-label-danger' : ''}`}
+        x="170"
+        y="188"
+        textAnchor="middle"
+      >
+        {down
+          ? `${down.title} down · 3 outputs still live`
+          : '4 isolated outputs · hover one to crash it'}
       </text>
 
       <defs>
@@ -187,43 +194,14 @@ function WorshipDiagram() {
 function ResumeDiagram() {
   return (
     <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
-      <rect className="diagram-box" x="14" y="26" width="110" height="46" rx="6" />
-      <text className="diagram-label" x="69" y="46" textAnchor="middle" fill="var(--text)">
-        RESUME.PDF
-      </text>
-      <text className="diagram-label diagram-label-sm" x="69" y="60" textAnchor="middle">
-        upload
-      </text>
+      <Wire d="M124 49 L160 49" marker="m-ai-a" step={1} accent />
+      <Wire d="M243 72 L243 100" marker="m-ai-b" step={2} delay={0.7} />
+      <Wire d="M243 146 L243 174" marker="m-ai-b" step={3} delay={1.4} />
 
-      <Wire d="M124 49 L160 49" marker="m-ai-a" accent />
-
-      <rect className="diagram-box-accent" x="160" y="26" width="166" height="46" rx="6" />
-      <text className="diagram-label diagram-label-accent" x="243" y="46" textAnchor="middle">
-        PARSE + EMBED
-      </text>
-      <text className="diagram-label diagram-label-sm" x="243" y="60" textAnchor="middle">
-        PyMuPDF · embeddings
-      </text>
-
-      <Wire d="M243 72 L243 100" marker="m-ai-b" delay={0.7} />
-
-      <rect className="diagram-box" x="160" y="100" width="166" height="46" rx="6" />
-      <text className="diagram-label" x="243" y="120" textAnchor="middle" fill="var(--text)">
-        MATCH
-      </text>
-      <text className="diagram-label diagram-label-sm" x="243" y="134" textAnchor="middle">
-        pgvector · cosine similarity
-      </text>
-
-      <Wire d="M243 146 L243 174" marker="m-ai-b" delay={1.4} />
-
-      <rect className="diagram-box" x="160" y="174" width="166" height="40" rx="6" />
-      <text className="diagram-label" x="243" y="192" textAnchor="middle" fill="var(--text)">
-        ASYNC FEEDBACK
-      </text>
-      <text className="diagram-label diagram-label-sm" x="243" y="205" textAnchor="middle">
-        Celery + Redis + Ollama
-      </text>
+      <Node x={14} y={26} w={110} h={46} title="RESUME.PDF" sub="upload" step={0} />
+      <Node x={160} y={26} w={166} h={46} title="PARSE + EMBED" sub="PyMuPDF · embeddings" step={1} accent />
+      <Node x={160} y={100} w={166} h={46} title="MATCH" sub="pgvector · cosine similarity" step={2} />
+      <Node x={160} y={174} w={166} h={40} title="ASYNC FEEDBACK" sub="Celery + Redis + Ollama" step={3} />
 
       <defs>
         <Marker id="m-ai-a" color="var(--accent)" />
