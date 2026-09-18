@@ -7,6 +7,8 @@ import { Capstone } from './components/Capstone'
 import { Skills } from './components/Skills'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
+import { Terminal, TerminalHint } from './components/Terminal'
+import { Achievements } from './components/Achievements'
 
 function App() {
   return (
@@ -22,6 +24,9 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <Terminal />
+      <TerminalHint />
+      <Achievements />
     </>
   )
 }

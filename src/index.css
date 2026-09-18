@@ -66,6 +66,13 @@
 
 html {
   scroll-behavior: smooth;
+  /* keep jump targets (nav, vim keys, terminal `open`) clear of the sticky header */
+  scroll-padding-top: 76px;
+}
+@media (max-width: 520px) {
+  html {
+    scroll-padding-top: 120px; /* header wraps to two lines here */
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1471,4 +1478,467 @@ footer {
   section {
     padding: 48px 0;
   }
+}
+
+/* ---------- XP bar (header) ---------- */
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.xp-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.xp-chip:hover {
+  border-color: var(--accent);
+}
+.xp-level {
+  color: var(--accent);
+  font-weight: 500;
+}
+.xp-points {
+  font-variant-numeric: tabular-nums;
+}
+.xp-trophies {
+  color: var(--text);
+}
+.xp-bar {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(var(--xp));
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.16, 0.8, 0.24, 1);
+}
+@media (max-width: 520px) {
+  .xp-points {
+    display: none;
+  }
+}
+
+/* ---------- Terminal overlay ---------- */
+.terminal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 16px 16px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(3px);
+  animation: fade-in 0.15s ease;
+}
+.terminal {
+  width: min(680px, 100%);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: #0d1014;
+  color: #d9d6ce;
+  border: 1px solid #2a3037;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  animation: terminal-in 0.22s cubic-bezier(0.16, 0.9, 0.24, 1);
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  background: #161a1f;
+  border-bottom: 1px solid #2a3037;
+  color: #8b9097;
+  font-size: 0.7rem;
+}
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+.terminal-dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3a4048;
+}
+.terminal-dots i:first-child {
+  background: #e8873a;
+}
+.terminal-close {
+  margin-left: auto;
+  background: none;
+  border: 1px solid #2a3037;
+  border-radius: 4px;
+  color: inherit;
+  font: inherit;
+  padding: 1px 6px;
+  cursor: pointer;
+}
+.terminal-body {
+  padding: 12px 14px;
+  overflow-y: auto;
+  cursor: text;
+}
+.terminal-body p {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.terminal-out,
+.terminal-dim {
+  color: #9aa0a7;
+}
+.terminal-prompt {
+  color: #5fb88a;
+}
+.terminal-input-row {
+  display: flex;
+  gap: 0.6ch;
+}
+.terminal-input-row input {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: #f1eee6;
+  font: inherit;
+  caret-color: #e8873a;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes terminal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+}
+
+/* ---------- Achievement toasts ---------- */
+.toasts {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+.toast {
+  width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  box-shadow: 0 18px 40px -16px var(--shadow);
+  animation: toast-life ease both;
+}
+.toast-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.toast-title {
+  margin: 4px 0 0;
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-weight: 800;
+  color: var(--text);
+}
+.toast-desc {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+@keyframes toast-life {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+  }
+  8%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+/* reduced motion shrinks animations to ~0ms, which would hide toasts instantly;
+   drop the animation and let the timeout remove them */
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none !important;
+  }
+}
+
+/* ---------- Terminal discoverability ---------- */
+.dev-hint {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 12px 5px 5px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 12px 30px -14px var(--shadow);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  --hint-at: 3.3s; /* right after the hero status panel finishes booting (StatusPanel STEP_MS) */
+  animation: hint-in 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) var(--hint-at) backwards;
+}
+/* then its parts: button, shortcut keys, a press on each keycap, one ping on the button */
+.dev-hint-btn,
+.dev-hint-keys {
+  animation: hint-part 0.35s ease-out backwards;
+}
+.dev-hint-btn {
+  animation-delay: calc(var(--hint-at) + 0.1s);
+}
+.dev-hint-keys {
+  animation-delay: calc(var(--hint-at) + 0.2s);
+}
+.dev-hint kbd {
+  animation: key-press 0.22s ease-in-out backwards;
+}
+.dev-hint-btn kbd {
+  animation-delay: calc(var(--hint-at) + 0.55s);
+}
+.dev-hint-keys kbd:nth-of-type(1) {
+  animation-delay: calc(var(--hint-at) + 0.7s);
+}
+.dev-hint-keys kbd:nth-of-type(2) {
+  animation-delay: calc(var(--hint-at) + 0.82s);
+}
+.dev-hint-keys kbd:nth-of-type(3) {
+  animation-delay: calc(var(--hint-at) + 0.94s);
+}
+.dev-hint-btn::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  animation: hint-ping 0.9s ease-out calc(var(--hint-at) + 1.15s) backwards;
+  opacity: 0;
+}
+.dev-hint-btn {
+  position: relative;
+}
+
+@keyframes hint-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+  }
+}
+@keyframes hint-part {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+}
+@keyframes key-press {
+  50% {
+    transform: translateY(1px);
+    border-bottom-width: 1px;
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+@keyframes hint-ping {
+  from {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--accent);
+  }
+  to {
+    opacity: 0;
+    box-shadow: 0 0 0 7px transparent;
+  }
+}
+/* reduced motion zeroes durations but not delays: show the pill at once instead */
+@media (prefers-reduced-motion: reduce) {
+  .dev-hint {
+    --hint-at: 0s;
+  }
+  .dev-hint-btn::after {
+    display: none;
+  }
+}
+.dev-hint-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+.dev-hint-btn > span {
+  color: var(--accent);
+  font-weight: 500;
+}
+.dev-hint-btn:hover {
+  border-color: var(--accent);
+}
+.dev-hint-btn:active {
+  transform: scale(0.97);
+}
+kbd {
+  display: inline-block;
+  min-width: 1.7em;
+  padding: 1px 5px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  text-align: center;
+  line-height: 1.5;
+}
+/* no keyboard on touch devices: keep the button, drop the key hints */
+@media (hover: none) {
+  .dev-hint {
+    padding-right: 5px;
+  }
+  .dev-hint-btn kbd,
+  .dev-hint-keys {
+    display: none;
+  }
+}
+/* phones: stack toasts above the hint pill instead of over it */
+@media (max-width: 520px) {
+  .toasts {
+    bottom: 64px;
+  }
+}
+.terminal-welcome p {
+  color: #9aa0a7;
+}
+.terminal-welcome p {
+  margin: 0 0 8px;
+  color: #b4b8be;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+.terminal-welcome kbd,
+.terminal-legend kbd {
+  background: #1d2228;
+  border-color: #353c44;
+  color: #e6e3db;
+}
+.terminal-suggestions {
+  list-style: none;
+  margin: 4px 0 12px;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.terminal-suggestions li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.terminal-suggestions button {
+  min-width: 15ch;
+  padding: 2px 8px;
+  border: 1px solid #2a3037;
+  border-radius: 4px;
+  background: #161a1f;
+  color: #e8873a;
+  font: inherit;
+  font-size: 0.78rem;
+  text-align: left;
+  cursor: pointer;
+}
+.terminal-suggestions button:hover,
+.terminal-suggestions button:focus-visible {
+  border-color: #e8873a;
+}
+.terminal-suggestions span {
+  color: #8b9097;
+  font-size: 0.76rem;
+}
+
+/* autocomplete: a faded copy of the completion sits behind the transparent input */
+.terminal-field {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+.terminal-ghost {
+  position: absolute;
+  inset: 0;
+  color: #555c64;
+  white-space: pre;
+  pointer-events: none;
+}
+.terminal-ghost span {
+  visibility: hidden;
+}
+.terminal-input-row input::placeholder {
+  color: #555c64;
+}
+
+.terminal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  padding: 8px 12px;
+  border-top: 1px solid #2a3037;
+  background: #161a1f;
+  color: #8b9097;
+  font-size: 0.68rem;
+}
+.terminal-legend button {
+  margin-left: auto;
+  background: none;
+  border: 1px solid #2a3037;
+  border-radius: 4px;
+  color: #e8873a;
+  font: inherit;
+  padding: 1px 8px;
+  cursor: pointer;
 }

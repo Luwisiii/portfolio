@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSpotlight } from '../hooks/useSpotlight'
+import { unlock } from '../game'
 
 function useDrawIn() {
   const containerRef = useRef(null)
@@ -137,6 +138,11 @@ function WorshipDiagram() {
   const [crashed, setCrashed] = useState(null)
   const down = OUTPUTS.find((o) => o.id === crashed)
 
+  function crash(id) {
+    setCrashed(id)
+    unlock('chaos')
+  }
+
   return (
     <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
       {OUTPUTS.map((o, i) => (
@@ -166,9 +172,9 @@ function WorshipDiagram() {
           accent={o.accent}
           crashed={crashed === o.id}
           className="is-crashable"
-          onMouseEnter={() => setCrashed(o.id)}
+          onMouseEnter={() => crash(o.id)}
           onMouseLeave={() => setCrashed(null)}
-          onClick={() => setCrashed((c) => (c === o.id ? null : o.id))}
+          onClick={() => (crashed === o.id ? setCrashed(null) : crash(o.id))}
         />
       ))}
 

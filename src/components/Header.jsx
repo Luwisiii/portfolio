@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { Magnet } from './Magnet'
+import { XpBar } from './XpBar'
 
 const NAV_LINKS = [
   { id: 'featured', label: 'Work' },
@@ -68,6 +69,8 @@ export function Header() {
           ))}
         </nav>
 
+        <div className="header-tools">
+        <XpBar />
         <Magnet padding={45} strength={3}>
           <button
             className="theme-toggle"
@@ -91,6 +94,7 @@ export function Header() {
             </svg>
           </button>
         </Magnet>
+        </div>
       </div>
     </header>
   )

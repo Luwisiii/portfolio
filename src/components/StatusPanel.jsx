@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { unlock } from '../game'
 
 const rows = [
   { name: 'L.O.U.I.S.', state: 'Active dev', kind: 'dev', build: 'cargo build --release' },
@@ -31,6 +32,7 @@ export function StatusPanel() {
 
   useEffect(() => {
     if (!booted) return
+    unlock('boot')
     const start = Date.now()
     const id = setInterval(() => setElapsed(Math.floor((Date.now() - start) / 1000)), 1000)
     return () => clearInterval(id)
