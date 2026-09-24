@@ -982,6 +982,10 @@ a.project-link:hover::after {
   color: var(--accent);
 }
 
+.project-link + .project-link {
+  margin-left: 28px;
+}
+
 .project-link.is-unlinked {
   color: var(--text-muted);
   border-bottom-color: var(--border);

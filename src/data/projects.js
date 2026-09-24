@@ -29,7 +29,7 @@ export const featuredProjects = [
     id: 'ai-resume-analyzer',
     name: 'AI Resume Analyzer',
     tagline: 'Full-stack · AI',
-    status: { label: 'Personal project · open source', kind: 'dev' },
+    status: { label: 'Personal project · live demo', kind: 'live' },
     description:
       'Upload a resume and get structured feedback: skills, ATS readiness, strengths, weaknesses, plus a semantic match score against a real job description instead of plain keyword overlap.',
     problem: 'Most ATS tools reject good candidates just because their resume uses different words than the job post.',
@@ -44,7 +44,8 @@ export const featuredProjects = [
       'Celery · Redis',
       'Ollama',
     ],
-    link: 'https://github.com/Luwisiii/AI-Resume-Analyzer',
+    link: null,
+    demo: 'https://ai-resume-analyzer-40xn.onrender.com/',
   },
 ]
 

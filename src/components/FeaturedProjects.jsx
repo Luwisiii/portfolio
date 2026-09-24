@@ -51,7 +51,19 @@ export function FeaturedProjects() {
                 View on GitHub
               </a>
             ) : (
-              <span className="project-link is-unlinked">Source available on request</span>
+              !project.demo && (
+                <span className="project-link is-unlinked">Source available on request</span>
+              )
+            )}
+            {project.demo && (
+              <a
+                className="project-link"
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Live demo
+              </a>
             )}
           </div>
           <ProjectDiagram variant={project.id} />

@@ -4,7 +4,7 @@ import { unlock } from '../game'
 const rows = [
   { name: 'L.O.U.I.S.', state: 'Active dev', kind: 'dev', build: 'cargo build --release' },
   { name: 'Worship Studio', state: 'Production', kind: 'live', build: 'tauri build' },
-  { name: 'AI Resume Analyzer', state: 'Open source', kind: 'dev', build: 'docker compose up' },
+  { name: 'AI Resume Analyzer', state: 'Live demo', kind: 'live', build: 'docker compose up' },
 ]
 
 const STEP_MS = 900
@@ -46,7 +46,7 @@ export function StatusPanel() {
     <div
       className={`status-panel${booted ? ' is-booted' : ''}`}
       role="img"
-      aria-label="Live status panel showing project states: L.O.U.I.S. in active development, Worship Studio in production, AI Resume Analyzer open source"
+      aria-label="Live status panel showing project states: L.O.U.I.S. in active development, Worship Studio in production, AI Resume Analyzer live as a demo"
     >
       <div className="status-panel-head">
         <span>{booted ? 'All systems up' : 'Booting…'}</span>
