@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { FeaturedProjects } from './components/FeaturedProjects'
@@ -12,6 +13,14 @@ import { Achievements } from './components/Achievements'
 import { Reward } from './components/Reward'
 
 function App() {
+  // shared links like /#top: jump to the section, then drop the hash from the URL
+  useEffect(() => {
+    if (!location.hash) return
+    const el = document.getElementById(decodeURIComponent(location.hash.slice(1)))
+    history.replaceState(null, '', location.pathname + location.search)
+    el?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  }, [])
+
   return (
     <>
       <Header />
