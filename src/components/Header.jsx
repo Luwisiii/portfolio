@@ -45,12 +45,21 @@ function useScrollSpy(ids) {
   return activeId
 }
 
+// scroll to the section without writing #id into the URL
+function jump(e) {
+  const a = e.target.closest('a[href^="#"]')
+  const el = a && document.getElementById(a.getAttribute('href').slice(1))
+  if (!el) return
+  e.preventDefault()
+  el.scrollIntoView({ block: 'start' })
+}
+
 export function Header() {
   const { isDark, toggle } = useTheme()
   const activeId = useScrollSpy(NAV_IDS)
 
   return (
-    <header>
+    <header onClick={jump}>
       <div className="header-inner">
         <a className="brand" href="#top">
           <span className="brand-name">Paolo Dumayas</span>
