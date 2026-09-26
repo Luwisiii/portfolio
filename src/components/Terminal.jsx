@@ -118,7 +118,7 @@ function run(input, progress) {
     }
     case 'whoami':
       return [
-        'Paolo Dumayas · full-stack developer',
+        'Paolo Dumayas · software engineer, full-stack web',
         'Builds the whole system: mobile IDEs with Rust engines, live production',
         'consoles, internal tools. Python · React · TypeScript · Rust.',
       ]

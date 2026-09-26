@@ -63,7 +63,14 @@ export function Header() {
       <div className="header-inner">
         <a className="brand" href="#top">
           <span className="brand-name">Paolo Dumayas</span>
-          <span className="brand-role mono">Full-Stack Web Developer</span>
+          <span className="brand-role mono">
+            <span className="role-title">
+              <span className="dot-live" aria-hidden="true" />
+              Software Engineer
+            </span>
+            <span className="role-sep"> · </span>
+            <span className="role-focus">Full-Stack Web</span>
+          </span>
         </a>
 
         <nav className="site-nav" aria-label="Section navigation">
