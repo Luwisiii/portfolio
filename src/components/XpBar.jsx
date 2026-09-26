@@ -33,6 +33,8 @@ export function XpBar() {
 
   useEffect(() => {
     document.documentElement.toggleAttribute('data-complete', complete)
+    const icon = document.querySelector('link[rel="icon"]')
+    if (icon) icon.href = complete ? '/favicon-gold.svg' : '/favicon.svg'
   }, [complete])
 
   return (
