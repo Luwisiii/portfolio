@@ -73,12 +73,7 @@
 html {
   scroll-behavior: smooth;
   /* keep jump targets (nav, vim keys, terminal `open`) clear of the sticky header */
-  scroll-padding-top: 76px;
-}
-@media (max-width: 520px) {
-  html {
-    scroll-padding-top: 120px; /* header wraps to two lines here */
-  }
+  scroll-padding-top: calc(var(--header-h, 86px) + 12px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -269,9 +264,8 @@ header {
 
 .brand {
   display: flex;
-  align-items: baseline;
-  gap: 14px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 4px;
   text-decoration: none;
   color: inherit;
 }
@@ -362,7 +356,8 @@ header {
 .role-focus {
   white-space: nowrap;
 }
-@media (max-width: 520px) {
+/* below this the one-line role no longer fits beside the nav */
+@media (max-width: 880px) {
   .role-sep {
     display: none;
   }

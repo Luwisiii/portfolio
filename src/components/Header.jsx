@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { Magnet } from './Magnet'
 import { XpBar } from './XpBar'
@@ -45,6 +45,19 @@ function useScrollSpy(ids) {
   return activeId
 }
 
+// publish the header's real height so scroll-padding-top clears it at every width
+function useHeaderHeight(ref) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el || !('ResizeObserver' in window)) return
+    const observer = new ResizeObserver(() =>
+      document.documentElement.style.setProperty('--header-h', `${el.offsetHeight}px`),
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [ref])
+}
+
 // scroll to the section without writing #id into the URL
 function jump(e) {
   const a = e.target.closest('a[href^="#"]')
@@ -57,9 +70,11 @@ function jump(e) {
 export function Header() {
   const { isDark, toggle } = useTheme()
   const activeId = useScrollSpy(NAV_IDS)
+  const headerRef = useRef(null)
+  useHeaderHeight(headerRef)
 
   return (
-    <header onClick={jump}>
+    <header ref={headerRef} onClick={jump}>
       <div className="header-inner">
         <a className="brand" href="#top">
           <span className="brand-name">Paolo Dumayas</span>
