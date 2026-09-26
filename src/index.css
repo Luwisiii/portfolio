@@ -17,6 +17,7 @@
   --gold-soft: rgba(240, 192, 74, 0.14);
   --danger-soft: rgba(239, 106, 95, 0.16);
   --shadow: rgba(0, 0, 0, 0.45);
+  --term-accent: #e8873a;
   color-scheme: dark;
 }
 
@@ -64,6 +65,16 @@
   --danger-soft: rgba(194, 58, 46, 0.1);
   --shadow: rgba(20, 15, 5, 0.08);
   color-scheme: light;
+}
+
+/* every achievement unlocked: the whole site trades orange for gold */
+:root[data-complete] {
+  --accent: var(--gold);
+  --accent-soft: var(--gold-soft);
+  --accent-strong: color-mix(in srgb, var(--gold) 75%, var(--text));
+  --shine: color-mix(in srgb, var(--gold) 35%, var(--text));
+  --spot: color-mix(in srgb, var(--gold) 30%, transparent);
+  --term-accent: #f0c04a;
 }
 
 * {
@@ -1610,7 +1621,7 @@ footer {
   background: #3a4048;
 }
 .terminal-dots i:first-child {
-  background: #e8873a;
+  background: var(--term-accent);
 }
 .terminal-close {
   margin-left: auto;
@@ -1653,7 +1664,7 @@ footer {
   outline: none;
   color: #f1eee6;
   font: inherit;
-  caret-color: #e8873a;
+  caret-color: var(--term-accent);
 }
 
 @keyframes fade-in {
@@ -1917,7 +1928,7 @@ kbd {
   border: 1px solid #2a3037;
   border-radius: 4px;
   background: #161a1f;
-  color: #e8873a;
+  color: var(--term-accent);
   font: inherit;
   font-size: 0.78rem;
   text-align: left;
@@ -1925,7 +1936,7 @@ kbd {
 }
 .terminal-suggestions button:hover,
 .terminal-suggestions button:focus-visible {
-  border-color: #e8873a;
+  border-color: var(--term-accent);
 }
 .terminal-suggestions span {
   color: #8b9097;
@@ -1968,7 +1979,7 @@ kbd {
   background: none;
   border: 1px solid #2a3037;
   border-radius: 4px;
-  color: #e8873a;
+  color: var(--term-accent);
   font: inherit;
   padding: 1px 8px;
   cursor: pointer;

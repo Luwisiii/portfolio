@@ -27,14 +27,20 @@ export function XpBar() {
 
   const xp = xpOf(progress)
   const level = Math.floor(xp / XP_PER_LEVEL) + 1
-  const into = (xp % XP_PER_LEVEL) / XP_PER_LEVEL
+  const complete = isComplete(progress)
+  // every achievement done: nothing left to level toward, so the bar maxes out
+  const into = complete ? 1 : (xp % XP_PER_LEVEL) / XP_PER_LEVEL
+
+  useEffect(() => {
+    document.documentElement.toggleAttribute('data-complete', complete)
+  }, [complete])
 
   return (
     <>
       <button
-        className={`xp-chip mono${isComplete(progress) ? ' is-complete' : ''}`}
+        className={`xp-chip mono${complete ? ' is-complete' : ''}`}
         type="button"
-        onClick={() => (isComplete(progress) ? openReward() : openTerminal('achievements'))}
+        onClick={() => (complete ? openReward() : openTerminal('achievements'))}
         aria-label={`Level ${level}, ${xp} XP, ${progress.unlocked.length} of ${ACHIEVEMENTS.length} achievements. Open achievements.`}
       >
         <span className="xp-level">LVL {level}</span>
