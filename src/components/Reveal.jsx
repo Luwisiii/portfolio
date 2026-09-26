@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 export function Reveal({ children, as: Tag = 'div', delay = 0, className = '', style, ...props }) {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
+  // the stagger delay is for the entrance only; left on, it would lag every later hover
+  const [settled, setSettled] = useState(false)
 
   useEffect(() => {
     const el = ref.current
@@ -32,7 +34,8 @@ export function Reveal({ children, as: Tag = 'div', delay = 0, className = '', s
     <Tag
       ref={ref}
       className={`reveal${inView ? ' is-in' : ''}${className ? ` ${className}` : ''}`}
-      style={delay ? { ...style, transitionDelay: `${delay}ms` } : style}
+      style={delay && !settled ? { ...style, transitionDelay: `${delay}ms` } : style}
+      onTransitionEnd={(e) => inView && e.target === e.currentTarget && setSettled(true)}
       {...props}
     >
       {children}
