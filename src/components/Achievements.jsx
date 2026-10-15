@@ -6,6 +6,7 @@ const TOAST_MS = 6000
 export function Achievements() {
   const [toasts, setToasts] = useState([])
   const progress = useProgress()
+  const left = ACHIEVEMENTS.length - progress.unlocked.length
 
   useEffect(
     () =>
@@ -29,6 +30,9 @@ export function Achievements() {
           </div>
           <p className="toast-title">{t.title}</p>
           <p className="toast-desc">{t.desc}</p>
+          <p className="toast-goal mono">
+            {left ? `${left} more for a legendary reward` : 'Legendary reward unlocked'}
+          </p>
         </div>
       ))}
     </div>

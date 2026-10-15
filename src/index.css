@@ -1475,6 +1475,42 @@ a.project-link:hover::after {
   opacity: 1;
 }
 
+/* Contact's nudge toward the achievement loot: one pip per achievement */
+.reward-teaser {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 7px 12px;
+  border: 1px dashed var(--gold);
+  border-radius: 8px;
+  background: var(--gold-soft);
+  color: var(--gold);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 0.8, 0.24, 1);
+}
+.reward-teaser:hover {
+  transform: translateY(-2px);
+}
+.reward-teaser.is-complete {
+  border-style: solid;
+}
+.reward-teaser-pips {
+  display: inline-flex;
+  gap: 3px;
+}
+.reward-teaser-pips i {
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--gold);
+  border-radius: 1px;
+}
+.reward-teaser-pips i.is-on {
+  background: var(--gold);
+}
+
 footer {
   max-width: 920px;
   margin: 0 auto;
@@ -1553,7 +1589,10 @@ footer {
   font-variant-numeric: tabular-nums;
 }
 .xp-trophies {
-  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--gold);
 }
 .xp-bar {
   position: absolute;
@@ -1717,6 +1756,13 @@ footer {
   margin: 0;
   font-size: 0.82rem;
   color: var(--text-muted);
+}
+.toast-goal {
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+  font-size: 0.68rem;
+  color: var(--gold);
 }
 
 @keyframes toast-life {

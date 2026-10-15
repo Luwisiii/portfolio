@@ -134,7 +134,7 @@ function run(input, progress) {
     case 'achievements':
       return [
         ...ACHIEVEMENTS.map(
-          (a) => `${progress.unlocked.includes(a.id) ? '[x]' : '[ ]'} ${a.title.padEnd(15)} ${progress.unlocked.includes(a.id) ? a.desc : '???'}`,
+          (a) => `${progress.unlocked.includes(a.id) ? '[x]' : '[ ]'} ${a.title.padEnd(15)} ${progress.unlocked.includes(a.id) ? a.desc : `hint: ${a.hint}`}`,
         ),
         '',
         `${progress.unlocked.length}/${ACHIEVEMENTS.length} unlocked`,
