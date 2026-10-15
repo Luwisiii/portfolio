@@ -6,9 +6,9 @@ export const featuredProjects = [
     status: { label: 'Active development', kind: 'dev' },
     description:
       'A mobile IDE that actually works offline: code editing, project navigation, HTML preview, a real terminal, search, and Git, all on a phone. Flutter draws the workspace. A Rust engine underneath does the actual file and process work.',
-    problem: "You can't build or run a real project from your phone.",
+    problem: "Code editors on a phone let you edit text, but you can't run a command or preview a page without going back to a laptop.",
     approach:
-      'Flutter UI talks to a Rust workspace engine over flutter_rust_bridge. Drift/SQLite keeps local state, so closing the app mid-task and picking it back up just works.',
+      'A Rust engine does the real work on the device (files, processes, the terminal) and Flutter is just the UI on top. Nothing needs a server, so it works offline, and Drift/SQLite saves your session so you can close the app and pick up where you left off.',
     tech: ['Flutter', 'Dart', 'Rust', 'Riverpod', 'flutter_rust_bridge', 'Drift', 'SQLite'],
     link: null,
   },
@@ -32,9 +32,9 @@ export const featuredProjects = [
     status: { label: 'Personal project · live demo', kind: 'live' },
     description:
       'Upload a resume and get structured feedback: skills, ATS readiness, strengths, weaknesses, plus a semantic match score against a real job description instead of plain keyword overlap.',
-    problem: 'Most ATS tools reject good candidates just because their resume uses different words than the job post.',
+    problem: 'Keyword filters can pass over a qualified resume because it says "built REST APIs" where the job post says "backend development."',
     approach:
-      "Sentence-transformer embeddings compared with pgvector cosine similarity, with the heavy analysis pushed to Celery workers so an upload doesn't sit there hanging.",
+      "The resume and job post are both turned into sentence-transformer embeddings and compared with pgvector cosine similarity, so the score follows meaning instead of exact words. The analysis runs in Celery workers, so uploads don't hang.",
     tech: [
       'Django REST',
       'React',
