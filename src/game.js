@@ -4,12 +4,12 @@ import { useSyncExternalStore } from 'react'
 // Progress survives reloads via localStorage; if storage is blocked it's per-visit.
 
 export const ACHIEVEMENTS = [
-  { id: 'boot', title: 'First Boot', desc: 'Watched the system come online. Press ` for a terminal.' },
-  { id: 'chaos', title: 'Chaos Engineer', desc: 'Crashed a live output. The rest survived.' },
-  { id: 'shell', title: 'Shell Access', desc: 'Opened the terminal.' },
-  { id: 'vim', title: 'Vim Enjoyer', desc: 'Navigated with j / k.' },
-  { id: 'pipeline', title: 'Full Pipeline', desc: 'Made it all the way to Contact.' },
-  { id: 'sudo', title: 'Root Access', desc: 'Ran sudo hire-me.' },
+  { id: 'boot', title: 'First Boot', desc: 'Watched the system come online. Press ` for a terminal.', hint: 'Let the hero panel finish booting.' },
+  { id: 'chaos', title: 'Chaos Engineer', desc: 'Crashed a live output. The rest survived.', hint: "Try breaking one of Worship Studio's outputs." },
+  { id: 'shell', title: 'Shell Access', desc: 'Opened the terminal.', hint: 'Press ` or click Terminal, bottom left.' },
+  { id: 'vim', title: 'Vim Enjoyer', desc: 'Navigated with j / k.', hint: "Move between sections like it's vim." },
+  { id: 'pipeline', title: 'Full Pipeline', desc: 'Made it all the way to Contact.', hint: 'Scroll all the way down.' },
+  { id: 'sudo', title: 'Root Access', desc: 'Ran sudo hire-me.', hint: 'Ask the terminal to hire-me, as root.' },
 ]
 
 const XP_ACHIEVEMENT = 100
@@ -80,6 +80,12 @@ export function isComplete(s) {
 
 export function openReward() {
   window.dispatchEvent(new Event('reward:open'))
+}
+
+// the XP chip and the Contact teaser: the loot once it's earned, otherwise what's left
+export function openProgress() {
+  if (isComplete(state)) openReward()
+  else openTerminal('achievements')
 }
 
 export function openTerminal(command) {
