@@ -217,10 +217,33 @@ function ResumeDiagram() {
   )
 }
 
+function LeadDiagram() {
+  return (
+    <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
+      <Wire d="M114 49 L150 49" marker="m-lead-a" step={1} accent />
+      <Wire d="M238 72 L238 100" marker="m-lead-b" step={2} delay={0.7} />
+      <Wire d="M192 174 L192 146" marker="m-lead-b" step={3} delay={1.4} />
+      <Wire d="M284 146 L284 174" marker="m-lead-b" step={3} delay={1.6} />
+
+      <Node x={14} y={26} w={100} h={46} title="INQUIRY" sub="form · webhook" step={0} />
+      <Node x={150} y={26} w={176} h={46} title="LEAD INTAKE" sub="Gemini · quote must match" step={1} accent />
+      <Node x={150} y={100} w={176} h={46} title="LEADS TABLE" sub="n8n data table" step={2} />
+      <Node x={150} y={174} w={84} h={40} title="PAYMENTS" sub="mark won" step={3} />
+      <Node x={242} y={174} w={84} h={40} title="AGENT" sub="read-only" step={3.2} />
+
+      <defs>
+        <Marker id="m-lead-a" color="var(--accent)" />
+        <Marker id="m-lead-b" color="var(--text-muted)" />
+      </defs>
+    </svg>
+  )
+}
+
 const DIAGRAMS = {
   louis: LouisDiagram,
   'worship-studio': WorshipDiagram,
   'ai-resume-analyzer': ResumeDiagram,
+  'lead-intelligence': LeadDiagram,
 }
 
 export function ProjectDiagram({ variant }) {

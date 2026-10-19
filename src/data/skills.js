@@ -33,6 +33,10 @@ export const skillGroups = [
       'PyMuPDF',
       'ExcelJS',
       'TensorFlow / Keras',
+      'n8n',
+      'Gemini API',
+      'Groq',
+      'AI agents · tool calling',
     ],
   },
   {
@@ -56,6 +60,6 @@ export const skillGroups = [
   },
   {
     name: 'Tools',
-    items: ['Git · GitHub', 'Docker', 'Postman', 'Puppeteer', 'Vite', 'Tailwind CSS', 'Bootstrap'],
+    items: ['Git · GitHub', 'Docker', 'Postman', 'Puppeteer', 'Vite', 'Vercel', 'Vitest', 'Tailwind CSS', 'Bootstrap'],
   },
 ]

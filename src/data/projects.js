@@ -47,6 +47,21 @@ export const featuredProjects = [
     link: null,
     demo: 'https://ai-resume-analyzer-40xn.onrender.com/',
   },
+  {
+    id: 'lead-intelligence',
+    name: 'Lead Intelligence',
+    tagline: 'Automation · AI',
+    status: { label: 'Personal project · live demo', kind: 'live' },
+    description:
+      'An AI lead-scoring system built from five n8n workflows around one Leads table. Gemini rates each inquiry hot, warm, cold or unclear, payments sync in to mark leads won, a weekly report goes out by email, and a chat agent answers questions about the pipeline.',
+    problem:
+      "An AI that sorts inquiries sounds just as sure when it's guessing, so a sales team can't tell a real hot lead from a confident mistake.",
+    approach:
+      "Gemini has to quote the exact words behind its verdict, or the lead is held as unclear, and low-confidence calls go to a person. Payments override manual calls, which override the AI, and every count is computed from stored rows, never written by the model.",
+    tech: ['n8n', 'Gemini', 'Groq · gpt-oss-120b', 'React', 'TypeScript', 'Vercel Functions'],
+    link: 'https://github.com/Luwisiii/lead-intelligence-demo',
+    demo: 'https://lead-intelligence-demo-iota.vercel.app/',
+  },
 ]
 
 export const supportingProjects = [
