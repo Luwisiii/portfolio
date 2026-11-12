@@ -24,6 +24,7 @@ export const featuredProjects = [
       "A Tauri + React shell where each output path runs isolated, so one screen crashing doesn't take the rest down with it.",
     tech: ['Tauri', 'Rust', 'React', 'TypeScript', 'SQLite'],
     link: null,
+    demo: 'https://worshipstudioapp.vercel.app/#live',
   },
   {
     id: 'ai-resume-analyzer',
